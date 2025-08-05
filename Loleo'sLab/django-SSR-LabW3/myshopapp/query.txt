@@ -1,0 +1,67 @@
+from myshopapp.models import Customer, Product, Order, OrderItem
+
+#1
+Customer.objects.create(first_name="Django",last_name="Reinhardt",email="dj_rein@mail.com",address="Liberchies, Pont-à-Celles, Belgium")
+
+#2
+customer_to_update = Customer.objects.get(first_name="Django")
+customer_to_update.first_name = "Darwin"
+customer_to_update.last_name = "Nunez"
+customer_to_update.email = "66070148@kmitl.ac.th"
+customer_to_update.save()
+
+#3
+Product.objects.create(
+    name="USB-C Charger",
+    description="20W fast charging USB-C adapter, compact and efficient.",
+    remaining_amount=100,
+    price=299.50
+)
+Product.objects.create(
+    name="Noise Cancelling Earbuds",
+    description="Wireless earbuds with advanced noise cancelling technology.",
+    remaining_amount=50,
+    price=1890.00
+)
+Product.objects.create(
+    name="Mechanical Keyboard",
+    description="RGB mechanical keyboard designed for gamers with tactile feedback.",
+    remaining_amount=25,
+    price=2499.99
+)
+products_over_500 = Product.objects.filter(price__gt=500)
+for product in products_over_500:
+    print(f"{product.name} - Price: {product.price}")
+
+#4
+from datetime import date
+darwin = Customer.objects.get(first_name="Darwin", last_name="Nunez")
+
+new_order = Order.objects.create(
+    customer=darwin,
+    order_date=date(2025, 7, 16),
+    remark="This is order for Darwin Nunez")
+
+keyboard = Product.objects.get(name="Mechanical Keyboard")
+charger = Product.objects.get(name="USB-C Charger")
+
+OrderItem.objects.create(order=new_order, product=keyboard, amount=1)
+OrderItem.objects.create(order=new_order, product=charger, amount=2)
+
+#5
+products_with_cha = Product.objects.filter(name__icontains="cha")
+for product in products_with_cha:
+    print(product.name)
+
+#6
+from datetime import datetime, timedelta
+
+today = datetime.now()
+print(f"datetime.now = {today}")
+future_date = today + timedelta(days=500)
+day_of_week_index = future_date.weekday()
+days_of_week_th = ["วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์", "วันอาทิตย์"]
+day_name = days_of_week_th[day_of_week_index]
+
+print(f"นับจากวันนี้ไปอีก 500 วันจะเป็นวันที่: {future_date}")
+print(f"ซึ่งตรงกับ: {day_name}")
