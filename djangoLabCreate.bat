@@ -24,7 +24,7 @@ echo =======================================================
 echo.
 
 :: --- STEP 1: Get Week Number & Create Lab Folder ---
-set /p week_num="Enter the week number for the lab: "
+set /p week_num="Enter Student ID: "
 
 :: Validation for week number
 if "%week_num%"=="" (
@@ -32,15 +32,15 @@ if "%week_num%"=="" (
     echo. & pause & goto :main
 )
 
-set "lab_folder=%cd%\django-SSR-LabW%week_num%"
+set "lab_folder=%cd%\Quiz%week_num%"
 
 if exist "%lab_folder%" (
-    echo [ERROR] The folder "django-SSR-LabW%week_num%" already exists in this directory!
+    echo [ERROR] The folder "Quiz%week_num%" already exists in this directory!
     echo. & pause & goto :main
 )
 
 echo.
-echo [1/5] Creating lab folder: "django-SSR-LabW%week_num%"
+echo [1/5] Creating lab folder: "Quiz%week_num%"
 mkdir "%lab_folder%"
 if not exist "%lab_folder%" (
     echo [FATAL ERROR] Could not create lab folder. Exiting.
